@@ -12,15 +12,17 @@
 
 NAME = philo
 
-SRCS = ./src/initing.c ./src/main.c ./src/pars.c ./utils/utils.c
+SRCS = ./src/initing.c ./src/main.c ./src/pars.c ./utils/utils.c ./src/threads.c ./src/eatdreampray.c ./src/checks.c
 
 OBJS = $(SRCS:.c=.o)
 
 CC = cc
 
-CFLAGS = -Wall -Wextra -Werror
+CFLAGS = -Wall -Wextra -Werror 
 
 RM = rm -f
+
+SANITIZER = -fsanitize=thread
 
 all : $(NAME)
 
@@ -28,7 +30,7 @@ all : $(NAME)
 		$(CC) $(CFLAGS) -o $@ -c $<
 
 $(NAME) : $(OBJS)
-		$(CC) $(CFLAGS) -o $(NAME) $(OBJS)
+		$(CC) $(CFLAGS) -o $(NAME) $(OBJS) $(SANITIZER)
 
 clean :
 		$(RM) $(OBJS)

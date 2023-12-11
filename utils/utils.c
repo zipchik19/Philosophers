@@ -12,6 +12,23 @@
 
 #include "../philo.h"
 
+int	sleeping(size_t mlsec)
+{
+	size_t	start;
+
+	start = timing();
+	while (timing() - start < mlsec)
+		usleep(500);
+	return (0);
+}
+
+int	timing()
+{
+	struct timeval current_time;
+	error(gettimeofday(&current_time, NULL), "Error while using gettimeofday");
+	return (current_time.tv_sec * 1000 + current_time.tv_usec / 1000);
+}
+
 void error(int condition, char *str)
 {
 	if (condition)
