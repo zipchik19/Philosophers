@@ -18,26 +18,25 @@ OBJS = $(SRCS:.c=.o)
 
 CC = cc
 
-CFLAGS = -Wall -Wextra -Werror 
+CFLAGS = -Wall -Wextra -Werror -g -O1
 
 RM = rm -f
 
-SANITIZER = -fsanitize=thread
-
-all : $(NAME)
+all: $(NAME)
 
 %.o : %.c
-		$(CC) $(CFLAGS) -o $@ -c $<
+	$(CC) $(CFLAGS) -o $@ -c $<
 
-$(NAME) : $(OBJS)
-		$(CC) $(CFLAGS) -o $(NAME) $(OBJS) $(SANITIZER)
+$(NAME): $(OBJS)
+	$(CC) $(CFLAGS) -o $(NAME) $(OBJS) -pthread
 
-clean :
-		$(RM) $(OBJS)
+clean:
+	$(RM) $(OBJS)
 
-fclean : clean
-		$(RM) $(NAME)
+fclean: clean
+	$(RM) $(NAME)
 
 re: fclean all
 
 .PHONY: all clean fclean re
+

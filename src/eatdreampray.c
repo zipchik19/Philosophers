@@ -25,8 +25,7 @@ void	thinking(t_philo *philo)
 
 void	eatting(t_philo *philo)
 {
-	pthread_mutex_lock(philo
-	->rfork);
+	pthread_mutex_lock(philo->rfork);
 	message("Philo took the right fork", philo, philo->id);
 	if (philo->num_of_philo == 1)
 	{
@@ -40,11 +39,12 @@ void	eatting(t_philo *philo)
 	pthread_mutex_lock(philo->meal_lock);
 	message("Philo is eating", philo, philo->id);
 	philo->last_meal = timing();
-	philo->eaten++;
 	pthread_mutex_unlock(philo->meal_lock);
 	sleeping(philo->time_to_eat);
+	philo->eaten++;
+	pthread_mutex_lock(philo->meal_lock);
 	philo->iseatting = 0;
+	pthread_mutex_unlock(philo->meal_lock);
 	pthread_mutex_unlock(philo->rfork);
 	pthread_mutex_unlock(philo->lfork);
-
 }

@@ -22,14 +22,16 @@ int	sleeping(size_t mlsec)
 	return (0);
 }
 
-int	timing()
+int	timing(void)
 {
-	struct timeval current_time;
-	error(gettimeofday(&current_time, NULL), "Error while using gettimeofday");
+	struct timeval	current_time;
+
+	error(gettimeofday(&current_time, NULL) == -1, \
+	"Error while using gettimeofday");
 	return (current_time.tv_sec * 1000 + current_time.tv_usec / 1000);
 }
 
-void error(int condition, char *str)
+void	error(int condition, char *str)
 {
 	if (condition)
 	{
